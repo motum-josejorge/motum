@@ -1,0 +1,192 @@
+% Author: Adolfo Centeno 
+% Kubeet Corp
+% www.kubeet.com
+
+ 
+\documentclass{beamer}
+\setbeamertemplate{navigation symbols}{}
+\usepackage[utf8]{inputenc}
+\usepackage{beamerthemeshadow}
+\usepackage{listings}
+\usepackage{hyperref}
+
+
+\begin{document}
+\title{postgres install - motum}  
+\author{Adolfo Centeno Tellez}
+\date{\today} 
+
+\begin{frame}
+\titlepage
+\end{frame}
+
+\begin{frame}\frametitle{Table of contents}\tableofcontents
+\end{frame} 
+
+
+
+
+\section{Conceptos} 
+\begin{frame}\frametitle{postgres} 
+
+ Conceptos:
+ 
+\begin{itemize}
+\item install
+\item connect/createdb    
+\item create tables
+\item insert some values
+\item select values..
+ 
+
+\end{itemize} 
+
+
+
+\end{frame}
+
+\subsection{install}
+
+\begin{frame} 
+Install from here..
+
+\url{https://www.digitalocean.com/community/tutorials/como-instalar-y-utilizar-postgresql-en-ubuntu-16-04-es}
+
+
+\end{frame}
+
+
+\subsection{createdb / connect}
+
+\defverbatim[colored]\lstcreatedb{
+ \begin{lstlisting}[language=html,showstringspaces=false, basicstyle={\tiny}, keywordstyle=\color{red}]
+ 
+ $ sudo -u postgres createdb shopcar
+ $ sudo -u postgres createuser adsoft
+ $ sudo -u postgres psql
+ postgres=# alter user adsoft with encrypted password '5i5i5i5i';
+ postgres=# grant all privileges on database shopcar to adsoft;
+ 
+ \end{lstlisting}
+}
+
+\defverbatim[colored]\lstconnect{
+ \begin{lstlisting}[language=html,showstringspaces=false, basicstyle={\tiny}, keywordstyle=\color{red}]
+
+$ psql -d shopcar -U adsoft	
+shopcar=# \list	
+shopcar=# \conninfo 
+ 
+
+ \end{lstlisting}
+}
+
+\begin{frame}
+
+
+\begin{block}{create database}
+  \lstcreatedb
+\end{block}
+
+\begin{block}{connect to postgres}
+  \lstconnect
+  
+\end{block}
+
+
+\end{frame}
+
+
+\subsection{create tables}
+
+\defverbatim[colored]\lstcreateprod{
+ \begin{lstlisting}[language=html,showstringspaces=false, basicstyle={\tiny}, keywordstyle=\color{red}]
+  shopcar=#  create table productos (id SERIAL NOT NULL, 
+  codigo int, 
+  nombre  varchar(100), 
+  precio float, 
+  exist int,
+  "createdAt" date not null default CURRENT_DATE,
+  "updatedAt" date not null default CURRENT_DATE);
+
+ \end{lstlisting}
+}
+
+
+\defverbatim[colored]\lstprodtest{
+ \begin{lstlisting}[language=html,showstringspaces=false, basicstyle={\tiny}, keywordstyle=\color{red}]
+ shopcar=# insert into productos(codigo, nombre, precio, exist) values(1, 
+           'dron with raspberry pi 3', 8000, 10);
+ shopcar=# select * from productos;
+ \end{lstlisting}
+}
+
+
+\defverbatim[colored]\lstprodpk{
+ \begin{lstlisting}[language=html,showstringspaces=false, basicstyle={\tiny}, keywordstyle=\color{red}]
+ shopcar=# alter table productos add constraint pk_productos
+           primary key (codigo);
+ \end{lstlisting}
+}
+
+
+
+\defverbatim[colored]\lstproddelete{
+ \begin{lstlisting}[language=html,showstringspaces=false, basicstyle={\tiny}, keywordstyle=\color{red}] 
+ shopcar=# delete from productos where codigo=4;
+ shopcar=# delete from productos where precio > 5000 
+           and exist > 10;
+ shopcar=# delete from productos where precio > 5000 
+           or nombre like '%dron%' 
+ \end{lstlisting}
+}
+
+
+
+\defverbatim[colored]\lstprodupdate	{
+ \begin{lstlisting}[language=html,showstringspaces=false, basicstyle={\tiny}, keywordstyle=\color{red}] 
+ shopcar=# update productos set precio=1500 where codigo=3;
+ shopcar=# update productos set precio=1000,
+           exist=10, descripcion = 'intel edison' 
+           where codigo=3; 
+ \end{lstlisting}
+}
+
+
+\begin{frame} 
+
+
+\begin{block}{create table productos}
+  \lstcreateprod
+\end{block}
+
+
+\begin{block}{testing ...}
+  \lstprodtest
+\end{block}
+
+\begin{block}{creating Primary Key (PK) }
+  \lstprodpk
+\end{block}
+
+
+\end{frame}
+
+
+\begin{frame} 
+
+\begin{block}{delete .. }
+  \lstproddelete
+\end{block}
+
+
+\begin{block}{update .. }
+  \lstprodupdate
+\end{block}
+
+
+\end{frame}
+
+
+
+\end{document}

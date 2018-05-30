@@ -1,0 +1,240 @@
+% Author: Adolfo Centeno 
+% Kubeet Corp
+% www.kubeet.com
+
+ 
+\documentclass{beamer}
+\setbeamertemplate{navigation symbols}{}
+\usepackage[utf8]{inputenc}
+\usepackage{beamerthemeshadow}
+\usepackage{listings}
+
+\begin{document}
+\title{Goggle Compute Engine install - Motum}  
+\author{Adolfo Centeno}
+\date{\today} 
+
+\begin{frame}
+\titlepage
+\end{frame}
+
+\begin{frame}\frametitle{Table of contents}\tableofcontents
+\end{frame} 
+
+
+\section{Install, Google Compute Engine Client} 
+\begin{frame}\frametitle{The cloud computing stack – SaaS, PaaS, and IaaS} 
+
+We can represent cloud computing as a stack of three different categories:
+\begin{itemize}
+\item Software as a Service (SaaS)   
+\item Platform as a Service (PaaS) 
+\item Infrastructure as a Service (IaaS)
+ 
+
+\end{itemize} 
+
+
+
+\end{frame}
+
+\subsection{Google App Engine (GAE)}
+\begin{frame} 
+
+Hosting + Compute 
+
+There are two options if we want to host an application on Google Cloud Platform:
+
+
+
+\begin{enumerate}
+
+\item
+Google App Engine: This is Google's PaaS and it will not be covered in this project.
+
+\item
+Google Compute Engine: This is Google's IaaS and lets users run virtual
+machines on Google's infrastructure with a variety of hardware and
+software configurations.
+\end{enumerate}
+
+\end{frame}
+
+
+\subsection{Instalación de GCE Client (I)}
+
+
+\defverbatim[colored]\lstA{
+ \begin{lstlisting}[language=bash,showstringspaces=false, basicstyle={\tiny}, keywordstyle=\color{red}]
+export CLOUD_SDK_REPO="cloud-sdk-$(lsb_release -c -s)"
+ \end{lstlisting}
+}
+
+
+\defverbatim[colored]\lstB{
+ \begin{lstlisting}[language=bash,showstringspaces=false, basicstyle={\tiny}, keywordstyle=\color{red}]
+echo "deb http://packages.cloud.google.com/apt $CLOUD_SDK_REPO main" | 
+     sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
+ \end{lstlisting}
+}
+
+\defverbatim[colored]\lstC{
+ \begin{lstlisting}[language=bash,showstringspaces=false, basicstyle={\tiny}, keywordstyle=\color{red}]
+curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+ \end{lstlisting}
+}
+
+
+\begin{frame} 
+
+Windows install
+
+\begin{block}{Update and install the Cloud SDK in windows}
+\url{https://cloud.google.com/sdk/downloads}
+\end{block}
+
+	
+\end{frame}
+
+
+\begin{frame} 
+
+Ubuntu/Debian install (Part I)
+
+\begin{block}{Create an environment variable for the correct distribution}
+\lstA
+\end{block}
+
+
+\begin{block}{Add the Cloud SDK distribution URI as a package source:}
+\lstB
+\end{block}
+
+\begin{block}{Import the Google Cloud public key:}
+\lstC
+\end{block}
+
+
+	
+\end{frame}
+
+
+\subsection{Instalación de GAE (II)}
+
+\defverbatim[colored]\lstD{
+ \begin{lstlisting}[language=bash,showstringspaces=false, basicstyle={\tiny}, keywordstyle=\color{red}]
+sudo apt-get update && sudo apt-get install google-cloud-sdk
+ \end{lstlisting}
+}
+
+
+\defverbatim[colored]\lstE{
+ \begin{lstlisting}[language=bash,showstringspaces=false, basicstyle={\tiny}, keywordstyle=\color{red}]
+sudo apt-get install google-cloud-sdk-app-engine-python
+ \end{lstlisting}
+}
+
+\defverbatim[colored]\lstauthlogin{
+ \begin{lstlisting}[language=bash,showstringspaces=false, basicstyle={\tiny}, keywordstyle=\color{red}]
+
+$ sudo gcloud auth login  # login to Google 
+
+NOTE: 
+gmail user : adolfo.centeno@kubeet.com
+password   : 5i5i5i5i
+
+ \end{lstlisting}
+}
+
+
+\defverbatim[colored]\lstconnect{
+ \begin{lstlisting}[language=bash,showstringspaces=false, basicstyle={\tiny}, keywordstyle=\color{red}]
+# set the default project 
+$ sudo gcloud config set project sanguine-office-187416  
+
+# print virtual private servers
+$ sudo gcloud compute instances list  
+
+# check network connectivity
+$ ping                  
+
+# login with secure shell (ssh) to compute instance with [username]
+$ sudo gcloud compute ssh [username]@jenkins --zone us-east1-b
+
+# show home directory
+$ ls /home 
+
+ \end{lstlisting}
+}
+
+
+
+\defverbatim[colored]\lstfirewall{
+ \begin{lstlisting}[language=bash,showstringspaces=false, basicstyle={\tiny}, keywordstyle=\color{red}]
+# show firewall list
+$ sudo gcloud compute firewall-rules list  
+
+# create new rule to open 8085 port
+$ sudo gcloud compute firewall-rules create http_8085 allow -tcp:8085  
+
+
+ \end{lstlisting}
+}
+
+\begin{frame} 
+
+Ubuntu/Debian install  (Part II)
+
+\begin{block}{Update and install the Cloud SDK:}
+\lstD
+\end{block}
+
+
+\begin{block}{Install the additional component:}
+\lstE
+\end{block}
+
+
+
+	
+\end{frame}
+
+
+
+
+\begin{frame} 
+
+GCE/login
+
+\begin{block}{Run gcloud auth login to get started:}
+\lstauthlogin
+\end{block}
+	
+\end{frame}
+
+
+
+\begin{frame} 
+
+Connect to Google Compute Engine
+
+\begin{block}{Set project/connect with ssh to GCE}
+\lstconnect
+\end{block}
+
+	
+\end{frame}
+
+
+
+\section{GCE firewall} 
+\begin{frame}\frametitle{GCE firewall} 
+
+\begin{block}{Open firewall in GCE}
+\lstfirewall
+\end{block}
+
+
+\end{frame}
+
+\end{document}

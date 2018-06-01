@@ -18,10 +18,10 @@ COPY src/ /src/
 WORKDIR /src
 
 RUN npm install
-RUN npm install cors
+# RUN npm install cors
 
 # Open up external access to port 8081.
-EXPOSE  8081
+EXPOSE  8080
 
 # Run startup command.
 CMD ["node", "/src/server.js"]

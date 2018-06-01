@@ -4,7 +4,7 @@
 const Sequelize = require('sequelize');
 
 const sequelize = new 
-Sequelize('postgres://adsoft:5i5i5i5i@localhost:5433/shopcar');
+Sequelize('postgres://adsoft:5i5i5i5i@35.227.59.176:5432/shopcar');
 
 
 sequelize

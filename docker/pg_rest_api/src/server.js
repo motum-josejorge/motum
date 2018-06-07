@@ -133,9 +133,10 @@ router.route('/products/:product_id')
       }
       return myproduct
         .update({
-					nombre: req.body.nombre || myproduct.nombre,
+					codigo: req.body.codigo || myproduct.codigo,
+                  			nombre: req.body.nombre || myproduct.nombre,
 					precio: req.body.precio || myproduct.precio,
-					exist:  req.body.exist || myproduct.exist,
+					exist:  req.body.exist || myproduct.exist
         })
         .then(() => res.status(200).send(myproduct))  // Send back the updated product.
         .catch((error) => res.status(400).send(error));

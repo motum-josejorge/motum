@@ -10,8 +10,10 @@ export class CoinService {
   result: any;
   constructor(private http: HttpClient) {}
 
+  uri_base = 'http://35.227.59.176:8091'
+
   addCoin(codigo, nombre) {
-    const uri = 'http://localhost:8081/api/products';
+    const uri = this.uri_base + '/api/products';
     const obj = {
       codigo: codigo,
       nombre: nombre 
@@ -25,7 +27,7 @@ export class CoinService {
 
   getCoins() {
     //const uri = 'http://localhost:4000/coins';
-    const uri = 'http://localhost:8081/api/products';
+    const uri = this.uri_base + '/api/products';
     return this
             .http
             .get(uri)
@@ -35,7 +37,7 @@ export class CoinService {
   }
 
   editCoin(id) {
-    const uri = 'http://localhost:8081/api/products/' + id;
+    const uri = this.uri_base + '/api/products/' + id;
     return this
             .http
             .get(uri)
@@ -45,7 +47,7 @@ export class CoinService {
   }
 
   updateCoin(codigo, nombre, id) {
-    const uri = 'http://localhost:8081/api/products/' + id;
+    const uri = this.uri_base + '/api/products/' + id;
 
     const obj = {
       codigo: codigo,
@@ -58,7 +60,7 @@ export class CoinService {
   }
 
   deleteCoin(id) {
-    const uri = 'http://localhost:8081/api/products/' + id;
+    const uri = this.uri_base + '/api/products/' + id;
 
         return this
             .http
